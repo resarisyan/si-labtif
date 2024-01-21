@@ -12,9 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('asistens', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('nama');
-            $table->string('jabatan', 50);
+            $table->foreignUuid('user_id')->references('id')
+                ->on('users')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate()
+                ->primary();
+            $table->enum('jabatan', ['KETUA', 'SEKRETARIS', 'ANGGOTA', 'BENDAHARA']);
             $table->timestamps();
         });
     }
