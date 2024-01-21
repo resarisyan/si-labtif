@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Jurusan extends Model
 {
     use HasFactory, HasUuids;
+
+    protected $fillable = [
+        'nama',
+    ];
 }

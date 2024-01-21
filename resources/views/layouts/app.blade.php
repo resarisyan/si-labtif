@@ -1,4 +1,4 @@
-@props(['dataTable', 'create', 'edit', 'deleteAll', 'forms', 'status'])
+@props(['dataTable', 'create', 'edit', 'delete', 'deleteAll', 'forms', 'status'])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -58,7 +58,7 @@
                                                         </a>
                                                         @endisset
 
-                                                        @isset($delete)
+                                                        @isset($deleteAll)
                                                         <a href="javascript:void(0)" id="btnDeleteAll"
                                                             class="btn btn-sm btn-danger">
                                                             <em class="icon ni ni-trash"></em><span>Delete</span>

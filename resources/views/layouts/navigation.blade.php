@@ -23,6 +23,8 @@
                     <x-menu-link url="#" iconClass="icon ni ni-dashlite">Dashboard</x-menu-link>
                     <x-menu-link url="{{ route('admin.asisten.index') }}" iconClass="icon ni ni-user-list">{{
                         trans('messages.assistant') }}</x-menu-link>
+                    <x-menu-link url="{{ route('admin.jurusan.index') }}" iconClass="icon ni ni-flag">{{
+                        trans('messages.major') }}</x-menu-link>
                     @endrole
                 </ul>
             </div>

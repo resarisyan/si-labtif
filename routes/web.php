@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AsistenController;
+use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,8 +43,21 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{id}', [AsistenController::class, 'edit'])->name('edit');
                 Route::delete('/{id}', [AsistenController::class, 'destroy'])->name('destroy');
             });
+
+            Route::group([
+                'prefix' => 'jurusan',
+                'as' => 'jurusan.',
+            ], function () {
+                Route::get('/', [JurusanController::class, 'index'])->name('index');
+                Route::post('/', [JurusanController::class, 'store'])->name('store');
+                Route::put('/{id}', [JurusanController::class, 'update'])->name('update');
+                Route::get('/{id}', [JurusanController::class, 'edit'])->name('edit');
+                Route::delete('/{id}', [JurusanController::class, 'destroy'])->name('destroy');
+            });
         }
     );
+
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
