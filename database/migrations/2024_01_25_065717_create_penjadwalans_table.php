@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('registrasi_praktikums', function (Blueprint $table) {
+        Schema::create('penjadwalans', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('mahasiswa_id')->references('user_id')
-                ->on('mahasiswas')
+            $table->foreignUuid('asisten_id')->references('user_id')
+                ->on('asistens')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->foreignUuid('nilai_id')->references('id')
-                ->on('nilais')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+            $table->enum('hari', ['SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU']);
+            $table->time('jam');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('registrasi_praktikums');
+        Schema::dropIfExists('penjadwalans');
     }
 };
