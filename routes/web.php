@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AsistenController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\MataPraktikumController;
+use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +67,28 @@ Route::middleware('auth')->group(function () {
                 Route::put('/{id}', [KelasController::class, 'update'])->name('update');
                 Route::get('/{id}', [KelasController::class, 'edit'])->name('edit');
                 Route::delete('/{id}', [KelasController::class, 'destroy'])->name('destroy');
+            });
+
+            Route::group([
+                'prefix' => 'ruangan',
+                'as' => 'ruangan.',
+            ], function () {
+                Route::get('/', [RuanganController::class, 'index'])->name('index');
+                Route::post('/', [RuanganController::class, 'store'])->name('store');
+                Route::put('/{id}', [RuanganController::class, 'update'])->name('update');
+                Route::get('/{id}', [RuanganController::class, 'edit'])->name('edit');
+                Route::delete('/{id}', [RuanganController::class, 'destroy'])->name('destroy');
+            });
+
+            Route::group([
+                'prefix' => 'mata-praktikum',
+                'as' => 'mata-praktikum.',
+            ], function () {
+                Route::get('/', [MataPraktikumController::class, 'index'])->name('index');
+                Route::post('/', [MataPraktikumController::class, 'store'])->name('store');
+                Route::put('/{id}', [MataPraktikumController::class, 'update'])->name('update');
+                Route::get('/{id}', [MataPraktikumController::class, 'edit'])->name('edit');
+                Route::delete('/{id}', [MataPraktikumController::class, 'destroy'])->name('destroy');
             });
         }
     );

@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Ruangan extends Model
 {
     use HasFactory, HasUuids;
+
+    protected $fillable = [
+        'nama',
+    ];
 }

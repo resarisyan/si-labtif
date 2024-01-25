@@ -27,6 +27,10 @@
                         trans('messages.major') }}</x-menu-link>
                     <x-menu-link url="{{ route('admin.kelas.index') }}" iconClass="icon ni ni-list-thumb">{{
                         trans('messages.class') }}</x-menu-link>
+                    <x-menu-link url="{{ route('admin.ruangan.index') }}" iconClass="icon ni ni-layout">{{
+                        trans('messages.room') }}</x-menu-link>
+                    <x-menu-link url="{{ route('admin.mata-praktikum.index') }}" iconClass="icon ni ni-template">{{
+                        trans('messages.practical_lesson') }}</x-menu-link>
                     @endrole
                 </ul>
             </div>

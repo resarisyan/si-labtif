@@ -46,6 +46,21 @@ return [
     'class' => 'Class Page',
     'class_description' => 'Manage class data for this application',
 
+    'create_room_success' => $data['create_success']('room'),
+    'update_room_success' => $data['update_success']('room'),
+    'delete_room_success' => $data['delete_success']('room'),
+    'get_room_success' => $data['get_success']('room'),
+    'room' => 'Room Page',
+    'room_description' => 'Manage room data for this application',
+
+    'create_practical_lesson_success' => $data['create_success']('practical lesson'),
+    'update_practical_lesson_success' => $data['update_success']('practical lesson'),
+    'delete_practical_lesson_success' => $data['delete_success']('practical lesson'),
+    'get_practical_lesson_success' => $data['get_success']('practical lesson'),
+    'practical_lesson' => 'Practical Lesson Page',
+    'practical_lesson_description' => 'Manage practical lesson data for this application',
+
+
     'account_settings' => 'Account Settings',
     'account_settings_description' => 'Manage your account settings',
 ];
