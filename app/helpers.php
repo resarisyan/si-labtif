@@ -3,6 +3,13 @@
 $data_required = false;
 $required_message = [];
 
+if (! function_exists('getAllJurusan')) {
+    function getAllJurusan()
+    {
+        return \App\Models\Jurusan::all();
+    }
+}
+
 if (!function_exists('setDataRequired')) {
     function setDataRequired($data, $message)
     {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AsistenController;
 use App\Http\Controllers\Admin\JurusanController;
+use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,17 @@ Route::middleware('auth')->group(function () {
                 Route::put('/{id}', [JurusanController::class, 'update'])->name('update');
                 Route::get('/{id}', [JurusanController::class, 'edit'])->name('edit');
                 Route::delete('/{id}', [JurusanController::class, 'destroy'])->name('destroy');
+            });
+
+            Route::group([
+                'prefix' => 'kelas',
+                'as' => 'kelas.',
+            ], function () {
+                Route::get('/', [KelasController::class, 'index'])->name('index');
+                Route::post('/', [KelasController::class, 'store'])->name('store');
+                Route::put('/{id}', [KelasController::class, 'update'])->name('update');
+                Route::get('/{id}', [KelasController::class, 'edit'])->name('edit');
+                Route::delete('/{id}', [KelasController::class, 'destroy'])->name('destroy');
             });
         }
     );

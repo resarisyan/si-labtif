@@ -14,6 +14,8 @@
         <!-- StyleSheets  -->
         <link rel="stylesheet" href="{{ asset('assets/css/dashlite.css?ver=3.2.3') }}">
         <link id="skin-default" rel="stylesheet" href="{{ asset('assets/css/theme.css?ver=3.2.3') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+        @stack('styles')
 
         <!-- Scripts -->
         @vite(['resources/js/app.js'])
@@ -170,6 +172,7 @@
 
         <script src="{{ asset('assets/js/bundle.js?ver=3.2.3') }}"></script>
         <script src="{{ asset('assets/js/scripts.js?ver=3.2.3') }}"></script>
+        @stack('scripts')
 
         <script type="text/javascript">
             const swalWithBootstrapButtons = Swal.mixin({
@@ -244,6 +247,7 @@
                     });
                 },
                 });
+
                 @isset($create)
                     $('#btnCreate').click(function() {
                         clearModal('Tambah', 'POST');
@@ -268,6 +272,7 @@
                         $.get(url + '/' + id, function(res) {
                             @yield('customBeginEdit')
                             forms.forEach(e => {
+                                console.log(e);
                                 let data = e.split(":");
                                 if(data[0] == 'relation'){
                                     if($('#' + data[1]).prop('tagName').toLowerCase() === 'select'){
@@ -297,8 +302,10 @@
                             $('#preview-image').attr('src', "assets/img/preview.png");
                         }
                         $("input[name='_method']").val(methodType);
-                        $('.was-validated').text('').removeClass('was-validated');
                         $('.error').removeClass('error');
+                        $('.error_text').text('');
+                        $('.select2-selection').removeClass('select2-error');
+                        $('.js-select2').val([]).trigger('change');
                         $('#btnSave').val('Submit');
                         $('#form').trigger('reset');
                         $('#modalHeading').html(title + ' ' + modalTitle);
@@ -371,8 +378,11 @@
                                         let error = $('div.' + prefix + '_error');
                                         let input = $('#' + prefix);
                                         error.text(val[0])
-                                        error.addClass('was-validated');
-                                        input.addClass('error');
+                                        if (input.prop('tagName').toLowerCase() === 'select' && input.hasClass('select2-hidden-accessible')) {
+                                            input.parent().find('.select2-selection').addClass('select2-error');
+                                        } else {
+                                            input.addClass('error');
+                                        }
                                     });
                                 } else {
                                     swalWithBootstrapButtons.fire(

@@ -9,4 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 class Kelas extends Model
 {
     use HasFactory, HasUuids;
+
+    protected $fillable = [
+        'nama',
+        'jurusan_id',
+        'tingkat',
+        'tahun'
+    ];
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
+    }
 }

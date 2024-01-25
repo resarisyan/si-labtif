@@ -39,6 +39,13 @@ return [
     'major' => 'Major Page',
     'major_description' => 'Manage major data for this application',
 
+    'create_class_success' => $data['create_success']('class'),
+    'update_class_success' => $data['update_success']('class'),
+    'delete_class_success' => $data['delete_success']('class'),
+    'get_class_success' => $data['get_success']('class'),
+    'class' => 'Class Page',
+    'class_description' => 'Manage class data for this application',
+
     'account_settings' => 'Account Settings',
     'account_settings_description' => 'Manage your account settings',
 ];

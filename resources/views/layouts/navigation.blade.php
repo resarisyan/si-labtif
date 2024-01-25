@@ -25,6 +25,8 @@
                         trans('messages.assistant') }}</x-menu-link>
                     <x-menu-link url="{{ route('admin.jurusan.index') }}" iconClass="icon ni ni-flag">{{
                         trans('messages.major') }}</x-menu-link>
+                    <x-menu-link url="{{ route('admin.kelas.index') }}" iconClass="icon ni ni-list-thumb">{{
+                        trans('messages.class') }}</x-menu-link>
                     @endrole
                 </ul>
             </div>

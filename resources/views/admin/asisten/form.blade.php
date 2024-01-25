@@ -34,11 +34,13 @@ $jabatan = [
 </div>
 <div class="form-group">
     <x-input-label for="jabatan" :value="__('Jabatan')" />
-    <x-input-select id="jabatan" name="jabatan">
-        <option value="">Pilih Jabatan</option>
-        @foreach ($jabatan as $item)
-        <option value="{{ $item }}">{{ $item }}</option>
-        @endforeach
-    </x-input-select>
+    <div class="form-control-select">
+        <x-input-select id="jabatan" name="jabatan">
+            <option value="">Pilih Jabatan</option>
+            @foreach ($jabatan as $item)
+            <option value="{{ $item }}">{{ $item }}</option>
+            @endforeach
+        </x-input-select>
+    </div>
     <x-input-error class="jabatan_error" />
 </div>
