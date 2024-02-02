@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class KelasController extends Controller
 {
@@ -42,9 +43,14 @@ class KelasController extends Controller
     public function store(KelasRequest $request): JsonResponse
     {
         try {
-            Kelas::create($request->all());
+            $slug = Str::slug($request->nama . ' ' . $request->tahun, '-');
+            $kelas = Kelas::where('slug', $slug)->first();
+            if ($kelas) {
+                return new PrettyJsonResponse(['success' => false, 'message' => Lang::get('messages.class_already_exists')], 400);
+            }
+            Kelas::create(array_merge($request->all(), ['slug' => $slug]));
         } catch (Exception $e) {
-            return new PrettyJsonResponse(['success' => false, 'message' => Lang::get('messages.internal_server_error')], 500);
+            return new PrettyJsonResponse(['success' => false, 'message' => $slug], 500);
         }
 
         return new PrettyJsonResponse(['success' => true, 'message' => Lang::get('messages.create_class_success')]);
@@ -67,7 +73,14 @@ class KelasController extends Controller
     {
         try {
             $data = Kelas::findOrFail($id);
-            $data->update($request->all());
+            $slug = Str::slug($request->nama . ' ' . $request->tingkat, '-');
+            if ($data->slug != $slug) {
+                $kelas = Kelas::where('slug', $slug)->first();
+                if ($kelas) {
+                    return new PrettyJsonResponse(['success' => false, 'message' => Lang::get('messages.class_already_exists')], 400);
+                }
+            }
+            $data->update(array_merge($request->all(), ['slug' => $slug]));
         } catch (ModelNotFoundException $e) {
             return new PrettyJsonResponse(['success' => false, 'message' => Lang::get('messages.not_found_class')], 404);
         } catch (Exception $e) {

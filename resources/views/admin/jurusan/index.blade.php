@@ -37,7 +37,7 @@ $delete = true;
 
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between">
-            <x-head-content title="{{ trans('messages.major') }}"
+            <x-head-content title="{{ trans('messages.major_page') }}"
                 description="{{ trans('messages.major_description') }}" />
         </div>
     </div>

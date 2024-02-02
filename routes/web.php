@@ -3,7 +3,9 @@
 use App\Http\Controllers\Admin\AsistenController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\MataPraktikumController;
+use App\Http\Controllers\Admin\PeriodeController;
 use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +50,20 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::group([
+                'prefix' => 'mahasiswa',
+                'as' => 'mahasiswa.',
+            ], function () {
+                Route::get('/', [MahasiswaController::class, 'index'])->name('index');
+                Route::post('/', [MahasiswaController::class, 'store'])->name('store');
+                Route::put('/status', [MahasiswaController::class, 'changeStatus'])->name('changeStatus');
+                Route::put('/{id}', [MahasiswaController::class, 'update'])->name('update');
+                Route::get('/search', [MahasiswaController::class, 'search'])->name('search');
+                Route::get('/{id}', [MahasiswaController::class, 'edit'])->name('edit');
+                Route::delete('/{id}', [MahasiswaController::class, 'destroy'])->name('destroy');
+                Route::post('/import', [MahasiswaController::class, 'import'])->name('import');
+            });
+
+            Route::group([
                 'prefix' => 'jurusan',
                 'as' => 'jurusan.',
             ], function () {
@@ -89,6 +105,17 @@ Route::middleware('auth')->group(function () {
                 Route::put('/{id}', [MataPraktikumController::class, 'update'])->name('update');
                 Route::get('/{id}', [MataPraktikumController::class, 'edit'])->name('edit');
                 Route::delete('/{id}', [MataPraktikumController::class, 'destroy'])->name('destroy');
+            });
+
+            Route::group([
+                'prefix' => 'periode',
+                'as' => 'periode.',
+            ], function () {
+                Route::get('/', [PeriodeController::class, 'index'])->name('index');
+                Route::post('/', [PeriodeController::class, 'store'])->name('store');
+                Route::put('/{id}', [PeriodeController::class, 'update'])->name('update');
+                Route::get('/{id}', [PeriodeController::class, 'edit'])->name('edit');
+                Route::delete('/{id}', [PeriodeController::class, 'destroy'])->name('destroy');
             });
         }
     );

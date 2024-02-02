@@ -30,7 +30,7 @@ class KelasRequest extends FormRequest
         return [
             'nama' => ['required', 'string'],
             'jurusan_id' => ['required', 'exists:jurusans,id'],
-            'tingkat' => ['required', 'integer', 'min:1', 'max:3'],
+            'tingkat' => ['required', 'integer', 'min:1', 'max:4'],
             'tahun' => ['required', 'integer', 'min:2000', 'max:' . $currentYear]
         ];
     }

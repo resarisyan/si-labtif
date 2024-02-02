@@ -29,6 +29,11 @@ return new class extends Migration
                 ->on('penjadwalans')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+            $table->foreignUuid('periode_id')->references('id')
+                ->on('periodes')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

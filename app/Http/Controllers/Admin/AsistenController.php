@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\AsistantStatusRequest;
 use App\Http\Requests\Admin\AsistenStoreRequest;
 use App\Http\Requests\Admin\AsistenUpdateRequest;
+use App\Http\Requests\Admin\UserStatusRequest;
 use App\Http\Responses\PrettyJsonResponse;
 use App\Models\Asisten;
 use App\Models\User;
@@ -44,7 +44,6 @@ class AsistenController extends Controller
                     $deleteBtn = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm btnDelete">Delete</a>';
                     return $editBtn . ' ' . $deleteBtn;
                 })
-
                 ->rawColumns(['action', 'jabatan', 'is_active'])
                 ->make(true);
         }
@@ -56,19 +55,14 @@ class AsistenController extends Controller
     {
         try {
             DB::beginTransaction();
-
-            $user = User::create([
-                'username' => $request->username,
-                'password' => Hash::make($request->password),
-                'name' => $request->name,
-                'email' => $request->email,
-            ]);
+            $user = User::findOrFail($request->user_id);
 
             $user->assignRole('asisten');
-            $user->givePermissionTo('create');
-            $user->givePermissionTo('read');
-            $user->givePermissionTo('update');
-            $user->givePermissionTo('delete');
+            if ($request->jabatan != 'ANGGOTA') {
+                $user->assignRole(['asisten', 'mahasiswa', strtolower($request->jabatan)]);
+            } else {
+                $user->assignRole(['asisten', 'mahasiswa']);
+            }
 
             Asisten::create([
                 'user_id' => $user->id,
@@ -108,8 +102,14 @@ class AsistenController extends Controller
             }
 
             $user = User::findOrFail($id);
-            $user->update($data);
+            if ($user->jabatan != 'ANGGOTA') {
+                $user->removeRole(strtolower($user->asisten->jabatan));
+            }
+            if ($request->jabatan != 'ANGGOTA') {
+                $user->assignRole(strtolower($request->jabatan));
+            }
 
+            $user->update($data);
             $user->asisten()->update([
                 'jabatan' => $request->jabatan,
             ]);
@@ -120,13 +120,13 @@ class AsistenController extends Controller
             return new PrettyJsonResponse(['success' => false, 'message' => Lang::get('messages.not_found_assistant')], 404);
         } catch (Exception $e) {
             DB::rollBack();
-            return new PrettyJsonResponse(['success' => false, 'message' => Lang::get('messages.internal_server_error')], 500);
+            return new PrettyJsonResponse(['success' => false, 'message' => $e->getMessage()], 500);
         }
 
         return new PrettyJsonResponse(['success' => true, 'message' => Lang::get('messages.update_assistant_success')]);
     }
 
-    public function changeStatus(AsistantStatusRequest $request)
+    public function changeStatus(UserStatusRequest $request)
     {
         try {
             $user = User::findOrfail($request->id);

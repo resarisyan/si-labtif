@@ -8,13 +8,13 @@ $delete = true;
 
 <x-app-layout :dataTable="$dataTable" :create="$create" :edit="$edit" :delete="$delete" :forms="$forms">
     @section('form')
-    @include('admin.mata_praktikum.form')
+    @include('admin.periode.form')
     @endsection
 
     @section('dataTable')
     <script type="text/javascript">
-        const url = "{{ route('admin.mata-praktikum.index') }}";
-        const modalTitle = 'Mata Praktikum';
+        const url = "{{ route('admin.periode.index') }}";
+        const modalTitle = 'Periode';
         const forms = ['nama'];
         const dataColumn = [
             {
@@ -37,8 +37,8 @@ $delete = true;
 
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between">
-            <x-head-content title="{{ trans('messages.practical_lesson_page') }}"
-                description="{{ trans('messages.practical_lesson_description') }}" />
+            <x-head-content title="{{ trans('messages.period_page') }}"
+                description="{{ trans('messages.period_description') }}" />
         </div>
     </div>
 </x-app-layout>

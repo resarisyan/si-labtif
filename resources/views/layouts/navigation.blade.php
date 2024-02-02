@@ -22,15 +22,19 @@
                     @role('admin')
                     <x-menu-link url="#" iconClass="icon ni ni-dashlite">Dashboard</x-menu-link>
                     <x-menu-link url="{{ route('admin.asisten.index') }}" iconClass="icon ni ni-user-list">{{
-                        trans('messages.assistant') }}</x-menu-link>
+                        trans('messages.assistant_page') }}</x-menu-link>
+                    <x-menu-link url="{{ route('admin.mahasiswa.index') }}" iconClass="icon ni ni-users">{{
+                        trans('messages.student_page') }}</x-menu-link>
                     <x-menu-link url="{{ route('admin.jurusan.index') }}" iconClass="icon ni ni-flag">{{
-                        trans('messages.major') }}</x-menu-link>
+                        trans('messages.major_page') }}</x-menu-link>
                     <x-menu-link url="{{ route('admin.kelas.index') }}" iconClass="icon ni ni-list-thumb">{{
-                        trans('messages.class') }}</x-menu-link>
+                        trans('messages.class_page') }}</x-menu-link>
                     <x-menu-link url="{{ route('admin.ruangan.index') }}" iconClass="icon ni ni-layout">{{
-                        trans('messages.room') }}</x-menu-link>
+                        trans('messages.room_page') }}</x-menu-link>
                     <x-menu-link url="{{ route('admin.mata-praktikum.index') }}" iconClass="icon ni ni-template">{{
-                        trans('messages.practical_lesson') }}</x-menu-link>
+                        trans('messages.practical_lesson_page') }}</x-menu-link>
+                    <x-menu-link url="{{ route('admin.periode.index') }}" iconClass="icon ni ni-calendar">{{
+                        trans('messages.period_page') }}</x-menu-link>
                     @endrole
                 </ul>
             </div>

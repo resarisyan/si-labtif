@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
-class AsistantStatusRequest extends FormRequest
+class MahasiswaStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +21,14 @@ class AsistantStatusRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'status' => ['required', 'boolean'],
+            'name' => ['required', 'string'],
+            'npm' => ['required', 'string', 'unique:mahasiswas,npm'],
+            'kelas_id' => ['required', 'exists:kelas,id'],
         ];
     }
 

@@ -1,5 +1,5 @@
 @php
-$forms = ['No', 'Nama', 'Tingkat', 'Jurusan', 'Tahun', 'Action'];
+$forms = ['No', 'Slug', 'Nama', 'Tingkat', 'Jurusan', 'Tahun', 'Action'];
 $dataTable = true;
 $create = true;
 $edit = true;
@@ -35,6 +35,10 @@ $delete = true;
                 name: 'DT_RowIndex'
             },
             {
+                data: 'slug',
+                name: 'slug'
+            },
+            {
                 data: 'nama',
                 name: 'nama'
             },
@@ -62,7 +66,7 @@ $delete = true;
 
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between">
-            <x-head-content title="{{ trans('messages.class') }}"
+            <x-head-content title="{{ trans('messages.class_page') }}"
                 description="{{ trans('messages.class_description') }}" />
         </div>
     </div>

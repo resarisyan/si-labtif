@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
-class AsistenStoreRequest extends FormRequest
+class ImportMahasiswaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,7 @@ class AsistenStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'exists:users,id'],
-            'jabatan' => ['required', 'in:BENDAHARA,KOORDINATOR LAB,KOORDINATOR TEKNIS,WAKIL KOORDINATOR TEKNIS,PJ DASAR,PJ JARKOM,PJ MULTI,SEKRETARIS, ANGGOTA'],
+            'file' => ['required', 'file', 'mimes:xlsx, xls, csv'],
         ];
     }
 

@@ -1,4 +1,4 @@
-@props(['dataTable', 'create', 'edit', 'delete', 'deleteAll', 'forms', 'status'])
+@props(['dataTable', 'create', 'edit', 'delete', 'deleteAll', 'forms', 'status', 'import', 'export'])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -49,21 +49,15 @@
                                                         @isset($import)
                                                         <a href="javascript:void(0)" id="btnImport"
                                                             class="btn btn-sm btn-success">
-                                                            Import
+                                                            <em class="icon ni ni-upload-cloud"></em><span>Import</span>
                                                         </a>
                                                         @endisset
 
                                                         @isset($export)
                                                         <a href="javascript:void(0)" id="btnExport"
                                                             class="btn btn-sm btn-warning">
-                                                            Export
-                                                        </a>
-                                                        @endisset
-
-                                                        @isset($deleteAll)
-                                                        <a href="javascript:void(0)" id="btnDeleteAll"
-                                                            class="btn btn-sm btn-danger">
-                                                            <em class="icon ni ni-trash"></em><span>Delete</span>
+                                                            <em
+                                                                class="icon ni ni-download-cloud"></em><span>Export</span>
                                                         </a>
                                                         @endisset
 
@@ -478,6 +472,79 @@
                         });
                     });
                 @endisset
+
+                @if(isset($import) || isset($export))
+                    $('body').on('click', '#btnImport', function() {
+                        clearModalFile('Import');
+                    });
+                    $('body').on('click', '#btnExport', function() {
+                        clearModalFile('Export');
+                    });
+
+                    function clearModalFile(title){
+                        methodType = title;
+                        $('.error').removeClass('error');
+                        $('.error_text').text('');
+                        $('#file').val('');
+                        $('#file').next('.form-file-label').html('Choose File');
+                        $('#btnImportSave').val('Submit');
+                        $('#modalImportHeading').html(title + ' ' + modalTitle);
+                        $('#importForm').trigger("reset");
+                        $('#modalImport').modal('show')
+                    }
+
+                    $('#btnImportSave').on('click', (function(e) {
+                        e.preventDefault();
+                        console.log(methodType)
+                        if (methodType == 'Import') {
+                            urlSave = url + '/import';
+                        } else if (methodType == 'Export') {
+                            urlSave = url + '/export';
+                        }
+                        $('#btnImportSave').text('Sending..', true);
+                        let form = $('#importForm')[0];
+
+                        $.ajax({
+                            data: new FormData(form),
+                            url: urlSave,
+                            type: 'POST',
+                            contentType: false,
+                            cache: false,
+                            processData:false,
+                            beforeSend: function() {
+                                $(document).find('div.error_text').text('');
+                                $('.input-error').removeClass('input-error');
+                            },
+                            success: function(res) {
+                                swalWithBootstrapButtons.fire(
+                                    'Success!',
+                                    res.message,
+                                    'success'
+                                )
+                                $('#importForm').trigger("reset");
+                                $('#modalImport').modal('hide');
+                                $("#dataTable").DataTable().ajax.reload();
+                                $('#btnImportSave').html('Save Changes');
+                            },
+                            error: function(res) {
+                                if (res.status == 400) {
+                                    $.each(res.responseJSON.errors, function(prefix, val) {
+                                        let error = $('div.file_error');
+                                        error.text(val[0])
+                                        input.addClass('error');
+                                    });
+                                } else {
+                                    swalWithBootstrapButtons.fire(
+                                        'Error!',
+                                        res.responseJSON.message,
+                                        'error'
+                                    )
+                                }
+                                $('#btnImportSave').html('Save Changes');
+                            }
+                        });
+                    }));
+                @endif
             });
         </script>
         @endisset

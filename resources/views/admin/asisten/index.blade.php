@@ -4,9 +4,11 @@ $dataTable = true;
 $create = true;
 $edit = true;
 $status = true;
+$delete = true;
 @endphp
 
-<x-app-layout :dataTable="$dataTable" :create="$create" :edit="$edit" :forms="$forms" :status="$status">
+<x-app-layout :dataTable="$dataTable" :create="$create" :edit="$edit" :delete="$delete" :forms="$forms"
+    :status="$status">
     @section('form')
     @include('admin.asisten.form')
     @endsection
@@ -54,9 +56,54 @@ $status = true;
     </script>
     @endsection
 
+    @section('customBeginEdit')
+    $('.asisten_create').fadeIn().hide();
+    $('.asisten_edit').fadeIn().show();
+    @endsection
+
+    @section('customCreate')
+    $('.asisten_create').fadeIn().show();
+    $('.asisten_edit').fadeIn().hide();
+    @endsection
+
+    @push('scripts')
+    <script>
+        $(document).ready(function() {
+        $('#user_id').select2({
+            ajax: {
+                url: '{{ route('admin.mahasiswa.search') }}', // Ganti dengan URL endpoint Anda untuk pencarian data tenaga pendidik
+                method: 'GET',
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    var query = {
+                        search: params.term // Menyertakan parameter pencarian dari inputan
+                    };
+                    return query;
+                },
+                processResults: function(res) {
+                    console.log(res.data)
+                    return {
+                        results: res.data.map(function(data) {
+                            return {
+                                id: data.id,
+                                text: data.username + ' - ' + data.name,
+                            };
+                        })
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Pilih Mahasiswa...',
+            minimumInputLength: 2,
+        });
+    });
+    </script>
+    @endpush
+
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between">
-            <x-head-content title="{{ trans('messages.assistant') }}"
+            <x-head-content title="{{ trans('messages.assistant_page') }}"
                 description="{{ trans('messages.assistant_description') }}" />
         </div>
     </div>

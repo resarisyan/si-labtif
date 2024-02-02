@@ -3,12 +3,10 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Responses\PrettyJsonResponse;
-use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\Rule;
 
 class AsistenUpdateRequest extends FormRequest
 {
@@ -29,10 +27,10 @@ class AsistenUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'email' => ['required', 'email', Rule::unique(User::class)->ignore($this->user()->id)],
-            'username' => ['required', 'string', Rule::unique(User::class)->ignore($this->user()->id)],
+            'email' => ['required', 'email', 'unique:users,email,' . $this->route('id')],
+            'username' => ['required', 'string', 'unique:users,username,' .  $this->route('id')],
             'password' => ['nullable', 'string', 'min:8'],
-            'jabatan' => ['required', 'in:KETUA,SEKRETARIS,BENDAHARA,ANGGOTA'],
+            'jabatan' => ['required', 'in:BENDAHARA,KOORDINATOR LAB,KOORDINATOR TEKNIS,WAKIL KOORDINATOR TEKNIS,PJ DASAR,PJ JARKOM,PJ MULTI,SEKRETARIS, ANGGOTA'],
         ];
     }
 

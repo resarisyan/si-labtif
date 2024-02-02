@@ -17,7 +17,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate()
                 ->primary();
-            $table->enum('jabatan', ['KETUA', 'SEKRETARIS', 'ANGGOTA', 'BENDAHARA']);
+            $table->enum('jabatan', ['BENDAHARA', 'KOORDINATOR LAB', 'KOORDINATOR TEKNIS', 'WAKIL KOORDINATOR TEKNIS', 'PJ DASAR', 'PJ JARKOM', 'PJ MULTI', 'SEKRETARIS', 'ANGGOTA']);
             $table->timestamps();
         });
     }

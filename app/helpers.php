@@ -3,10 +3,17 @@
 $data_required = false;
 $required_message = [];
 
-if (! function_exists('getAllJurusan')) {
+if (!function_exists('getAllJurusan')) {
     function getAllJurusan()
     {
         return \App\Models\Jurusan::all();
+    }
+}
+
+if (!function_exists('getAllKelas')) {
+    function getAllKelas()
+    {
+        return \App\Models\Kelas::with('jurusan')->get();
     }
 }
 
