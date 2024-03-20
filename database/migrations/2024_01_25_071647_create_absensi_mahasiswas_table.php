@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('absensi_mahasiswas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('praktikum_id')->references('id')
-                ->on('praktikums')
+            $table->foreignUuid('penjadwalan_id')->references('id')
+                ->on('penjadwalans')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->char('pertemuan', 2);

@@ -46,12 +46,15 @@ class MahasiswaController extends Controller
                 ->addColumn('npm', function ($row) {
                     return $row->mahasiswa->npm;
                 })
+                ->editColumn('image', function ($row) {
+                    return "<img src='" . asset('storage/' . $row->image) . "' class='img-thumbnail' width='100' />";
+                })
                 ->addColumn('action', function ($row) {
                     $editBtn = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm btnEdit">Edit</a>';
                     $deleteBtn = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm btnDelete">Delete</a>';
                     return $editBtn . ' ' . $deleteBtn;
                 })
-                ->rawColumns(['action', 'kelas', 'npm', 'is_active'])
+                ->rawColumns(['action', 'kelas', 'npm', 'is_active', 'image'])
                 ->make(true);
         }
 
@@ -62,10 +65,22 @@ class MahasiswaController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            $image = null;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image')->storeAs(
+                    'public/mahasiswa',
+                    'mahasiswa-' . $request->npm . '.' . $request->file('image')->getClientOriginalExtension(),
+                    'public'
+                );
+            }
+
             $user = User::create([
                 'name' => $request->name,
                 'username' => $request->npm,
                 'password' => bcrypt($request->npm),
+                'image' => $image,
+                'is_active' => 1,
             ]);
             $user->assignRole('mahasiswa');
 
@@ -101,10 +116,20 @@ class MahasiswaController extends Controller
         try {
             DB::beginTransaction();
             $user = User::findOrFail($id);
+
+            $image = $user->image;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image')->storeAs(
+                    'public/mahasiswa',
+                    'mahasiswa-' . $request->npm . '.' . $request->file('image')->getClientOriginalExtension(),
+                    'public'
+                );
+            }
             $user->update([
                 'name' => $request->name,
                 'username' => $request->npm,
                 'password' => bcrypt($request->npm),
+                'image' => $image,
             ]);
             $user->mahasiswa->update([
                 'npm' => $request->npm,
@@ -156,8 +181,11 @@ class MahasiswaController extends Controller
             $searchTerm = $request->input('search');
             $query = User::role('mahasiswa');
             if ($searchTerm) {
-                $query = User::where('name', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('username', 'like', '%' . $searchTerm . '%');
+                $query = User::role('mahasiswa')
+                    ->where(function ($q) use ($searchTerm) {
+                        $q->where('name', 'like', '%' . $searchTerm . '%')
+                            ->orWhere('username', 'like', '%' . $searchTerm . '%');
+                    });
             }
             $user = $query->limit(10)->get();
 

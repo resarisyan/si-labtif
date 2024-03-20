@@ -71,18 +71,17 @@ $delete = true;
         $(document).ready(function() {
         $('#user_id').select2({
             ajax: {
-                url: '{{ route('admin.mahasiswa.search') }}', // Ganti dengan URL endpoint Anda untuk pencarian data tenaga pendidik
+                url: '{{ route('admin.mahasiswa.search') }}',
                 method: 'GET',
                 dataType: 'json',
                 delay: 250,
                 data: function(params) {
                     var query = {
-                        search: params.term // Menyertakan parameter pencarian dari inputan
+                        search: params.term,
                     };
                     return query;
                 },
                 processResults: function(res) {
-                    console.log(res.data)
                     return {
                         results: res.data.map(function(data) {
                             return {

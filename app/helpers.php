@@ -17,6 +17,27 @@ if (!function_exists('getAllKelas')) {
     }
 }
 
+if (!function_exists('getAllAsisten')) {
+    function getAllAsisten()
+    {
+        return \App\Models\User::with('asisten')->where('is_active', true)->role('asisten')->get();
+    }
+}
+
+if (!function_exists('getAllMataPraktikum')) {
+    function getAllMataPraktikum()
+    {
+        return \App\Models\MataPraktikum::all();
+    }
+}
+
+if (!function_exists('getAllRuangan')) {
+    function getAllRuangan()
+    {
+        return \App\Models\Ruangan::all();
+    }
+}
+
 if (!function_exists('setDataRequired')) {
     function setDataRequired($data, $message)
     {

@@ -28,8 +28,10 @@ class MataPraktikumController extends Controller
                     $deleteBtn = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm btnDelete">Delete</a>';
                     return $editBtn . ' ' . $deleteBtn;
                 })
-
-                ->rawColumns(['action'])
+                ->editColumn('image', function ($row) {
+                    return '<img src="' . asset('storage/' . $row->image) . '" class="img-fluid" style="max-width: 100px">';
+                })
+                ->rawColumns(['action', 'image'])
                 ->make(true);
         }
 
@@ -39,7 +41,15 @@ class MataPraktikumController extends Controller
     public function store(MataPraktikumRequest $request): JsonResponse
     {
         try {
-            MataPraktikum::create($request->all());
+            $data = $request->all();
+            if ($request->hasFile('image')) {
+                $data['image'] = $request->file('image')->storeAs(
+                    'public/mata_praktikum',
+                    'mata_praktikum.' . $request->file('image')->getClientOriginalExtension(),
+                    'public'
+                );
+            }
+            MataPraktikum::create($data);
         } catch (Exception $e) {
             return new PrettyJsonResponse(['success' => false, 'message' => Lang::get('messages.internal_server_error')], 500);
         }
@@ -64,7 +74,15 @@ class MataPraktikumController extends Controller
     {
         try {
             $data = MataPraktikum::findOrFail($id);
-            $data->update($request->all());
+            $mataPraktikum = $request->all();
+            if ($request->hasFile('image')) {
+                $mataPraktikum['image'] = $request->file('image')->storeAs(
+                    'public/mata_praktikum',
+                    'mata_praktikum.' . $request->file('image')->getClientOriginalExtension(),
+                    'public'
+                );
+            }
+            $data->update($mataPraktikum);
         } catch (ModelNotFoundException $e) {
             return new PrettyJsonResponse(['success' => false, 'message' => Lang::get('messages.not_found_room')], 404);
         } catch (Exception $e) {

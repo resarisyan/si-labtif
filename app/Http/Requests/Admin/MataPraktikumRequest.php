@@ -28,6 +28,7 @@ class MataPraktikumRequest extends FormRequest
     {
         return [
             'nama' => ['required', 'string', 'unique:mata_praktikums,nama'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
 

@@ -12,5 +12,6 @@ class MataPraktikum extends Model
 
     protected $fillable = [
         'nama',
+        'image',
     ];
 }

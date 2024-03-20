@@ -25,3 +25,8 @@ if($kelas->isEmpty()) setDataRequired(true, 'kelas');
     </x-input-select>
     <x-input-error class="kelas_id_error" />
 </div>
+<div class="form-group">
+    <x-input-label for="image" :value="__('Image')" />
+    <x-input-file id="image" name="image" :value="__('375 x 400')" />
+    <x-input-error class="image_error" />
+</div>

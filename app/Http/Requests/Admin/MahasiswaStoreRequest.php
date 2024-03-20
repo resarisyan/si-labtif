@@ -29,6 +29,7 @@ class MahasiswaStoreRequest extends FormRequest
             'name' => ['required', 'string'],
             'npm' => ['required', 'string', 'unique:mahasiswas,npm'],
             'kelas_id' => ['required', 'exists:kelas,id'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
 

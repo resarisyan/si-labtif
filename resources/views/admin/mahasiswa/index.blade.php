@@ -1,5 +1,5 @@
 @php
-$forms = ['No', 'Nama', 'NPM', 'Kelas', 'Status', 'Action'];
+$forms = ['No', 'Nama', 'NPM', 'Kelas', 'Status', 'Image', 'Action'];
 $dataTable = true;
 $create = true;
 $edit = true;
@@ -19,7 +19,7 @@ $import = true;
         const url = "{{ route('admin.mahasiswa.index') }}";
         const modalTitle = 'Mahasiswa';
         const relationName = 'mahasiswa';
-        const forms = ['name', 'relation:npm', 'relation:kelas_id'];
+        const forms = ['name', 'relation:npm', 'relation:kelas_id', 'image'];
         const dataColumn = [
             {
                 data: 'DT_RowIndex',
@@ -42,6 +42,10 @@ $import = true;
                 name: 'is_active',
                 orderable: false,
                 searchable: false
+            },
+            {
+                data: 'image',
+                name: 'image',
             },
             {
                 data: 'action',

@@ -1,10 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\AsistenController;
+use App\Http\Controllers\Admin\Home\AboutController;
+use App\Http\Controllers\Admin\Home\BannerController;
+use App\Http\Controllers\Admin\Home\FaqController;
+use App\Http\Controllers\Admin\Home\SupporterController;
+use App\Http\Controllers\Admin\Home\WelcomeController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\MataPraktikumController;
+use App\Http\Controllers\Admin\PenjadwalanController;
 use App\Http\Controllers\Admin\PeriodeController;
 use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\ProfileController;
@@ -21,9 +27,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -37,6 +41,45 @@ Route::middleware('auth')->group(function () {
             'as' => 'admin.'
         ],
         function () {
+            Route::group([
+                'prefix' => 'home',
+                'as' => 'home.',
+            ], function () {
+                Route::group([
+                    'prefix' => 'about',
+                    'as' => 'about.',
+                ], function () {
+                    Route::get('/', [AboutController::class, 'index'])->name('index');
+                    Route::put('/', [AboutController::class, 'update'])->name('update');
+                });
+                Route::group([
+                    'prefix' => 'banner',
+                    'as' => 'banner.',
+                ], function () {
+                    Route::get('/', [BannerController::class, 'index'])->name('index');
+                    Route::put('/', [BannerController::class, 'update'])->name('update');
+                });
+                Route::group([
+                    'prefix' => 'faq',
+                    'as' => 'faq.',
+                ], function () {
+                    Route::get('/', [FaqController::class, 'index'])->name('index');
+                    Route::post('/', [FaqController::class, 'store'])->name('store');
+                    Route::put('/{id}', [FaqController::class, 'update'])->name('update');
+                    Route::get('/{id}', [FaqController::class, 'edit'])->name('edit');
+                    Route::delete('/{id}', [FaqController::class, 'destroy'])->name('destroy');
+                });
+                Route::group([
+                    'prefix' => 'supporter',
+                    'as' => 'supporter.',
+                ], function () {
+                    Route::get('/', [SupporterController::class, 'index'])->name('index');
+                    Route::post('/', [SupporterController::class, 'store'])->name('store');
+                    Route::put('/{id}', [SupporterController::class, 'update'])->name('update');
+                    Route::get('/{id}', [SupporterController::class, 'edit'])->name('edit');
+                    Route::delete('/{id}', [SupporterController::class, 'destroy'])->name('destroy');
+                });
+            });
             Route::group([
                 'prefix' => 'asisten',
                 'as' => 'asisten.',
@@ -116,6 +159,17 @@ Route::middleware('auth')->group(function () {
                 Route::put('/{id}', [PeriodeController::class, 'update'])->name('update');
                 Route::get('/{id}', [PeriodeController::class, 'edit'])->name('edit');
                 Route::delete('/{id}', [PeriodeController::class, 'destroy'])->name('destroy');
+            });
+
+            Route::group([
+                'prefix' => 'penjadwalan',
+                'as' => 'penjadwalan.',
+            ], function () {
+                Route::get('/{periode}', [PenjadwalanController::class, 'index'])->name('index');
+                Route::post('/{periode}', [PenjadwalanController::class, 'store'])->name('store');
+                Route::put('/{periode}/{id}', [PenjadwalanController::class, 'update'])->name('update');
+                Route::get('/{periode}/{id}', [PenjadwalanController::class, 'edit'])->name('edit');
+                Route::delete('/{periode}/{id}', [PenjadwalanController::class, 'destroy'])->name('destroy');
             });
         }
     );

@@ -84,6 +84,37 @@ return [
     'student_description' => 'Manage student data for this application',
     'import_student_success' => 'Student data imported successfully',
 
+    'create_schedule_success' => $data['create_success']('schedule'),
+    'update_schedule_success' => $data['update_success']('schedule'),
+    'delete_schedule_success' => $data['delete_success']('schedule'),
+    'get_schedule_success' => $data['get_success']('schedule'),
+    'schedule' => 'Schedule',
+    'schedule_page' => 'Schedule Page',
+    'schedule_description' => 'Manage schedule data for this application',
+
+    'create_faq_success' => $data['create_success']('faq'),
+    'update_faq_success' => $data['update_success']('faq'),
+    'delete_faq_success' => $data['delete_success']('faq'),
+    'get_faq_success' => $data['get_success']('faq'),
+    'faq' => 'Faq',
+    'faq_page' => 'Faq Page',
+    'faq_description' => 'Manage faq data for this application',
+
+    'create_supporter_success' => $data['create_success']('supporter'),
+    'update_supporter_success' => $data['update_success']('supporter'),
+    'delete_supporter_success' => $data['delete_success']('supporter'),
+    'get_supporter_success' => $data['get_success']('supporter'),
+    'supporter' => 'Supporter',
+    'supporter_page' => 'Supporter Page',
+    'supporter_description' => 'Manage supporter data for this application',
+
+
     'account_settings' => 'Account Settings',
     'account_settings_description' => 'Manage your account settings',
+
+    'home_about' => 'About',
+    'home_about_description' => 'Manage about data for this application',
+
+    'home_banner' => 'Banner',
+    'home_banner_description' => 'Manage banner data for this application',
 ];

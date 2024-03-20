@@ -17,8 +17,8 @@ return new class extends Migration
                 ->on('asistens')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->foreignUuid('praktikum_id')->references('id')
-                ->on('praktikums')
+            $table->foreignUuid('penjadwalan_id')->references('id')
+                ->on('penjadwalans')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->char('pertemuan', 2);

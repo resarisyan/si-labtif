@@ -19,8 +19,8 @@
                     <li class="nk-menu-heading">
                         <h6 class="overline-title text-primary-alt">Pages</h6>
                     </li>
+                    <x-menu-link url="{{ route('dashboard') }}" iconClass="icon ni ni-dashlite">Dashboard</x-menu-link>
                     @role('admin')
-                    <x-menu-link url="#" iconClass="icon ni ni-dashlite">Dashboard</x-menu-link>
                     <x-menu-link url="{{ route('admin.asisten.index') }}" iconClass="icon ni ni-user-list">{{
                         trans('messages.assistant_page') }}</x-menu-link>
                     <x-menu-link url="{{ route('admin.mahasiswa.index') }}" iconClass="icon ni ni-users">{{
@@ -35,6 +35,30 @@
                         trans('messages.practical_lesson_page') }}</x-menu-link>
                     <x-menu-link url="{{ route('admin.periode.index') }}" iconClass="icon ni ni-calendar">{{
                         trans('messages.period_page') }}</x-menu-link>
+                    <x-menu-link class="nk-menu-item has-sub" hasSub="{{ true }}">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-dashlite"></em></span>
+                            <span class="nk-menu-text">Home Page</span>
+                        </a>
+                        <ul class="nk-menu-sub" style="display: none;">
+                            <li class="nk-menu-item">
+                                <a href="{{ route('admin.home.about.index') }}" class="nk-menu-link"><span
+                                        class="nk-menu-text">About</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ route('admin.home.banner.index') }}" class="nk-menu-link"><span
+                                        class="nk-menu-text">Banner</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ route('admin.home.faq.index') }}" class="nk-menu-link"><span
+                                        class="nk-menu-text">Faq</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ route('admin.home.supporter.index') }}" class="nk-menu-link"><span
+                                        class="nk-menu-text">Supporter</span></a>
+                            </li>
+                        </ul>
+                    </x-menu-link>
                     @endrole
                 </ul>
             </div>

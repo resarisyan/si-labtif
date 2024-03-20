@@ -1,5 +1,5 @@
 @php
-$forms = ['No', 'Nama', 'Action'];
+$forms = ['No', 'Nama', 'Image', 'Action'];
 $dataTable = true;
 $create = true;
 $edit = true;
@@ -15,7 +15,7 @@ $delete = true;
     <script type="text/javascript">
         const url = "{{ route('admin.mata-praktikum.index') }}";
         const modalTitle = 'Mata Praktikum';
-        const forms = ['nama'];
+        const forms = ['nama','image'];
         const dataColumn = [
             {
                 data: 'DT_RowIndex',
@@ -24,6 +24,10 @@ $delete = true;
             {
                 data: 'nama',
                 name: 'nama'
+            },
+            {
+                data: 'image',
+                name: 'image'
             },
             {
                 data: 'action',
