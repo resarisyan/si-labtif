@@ -52,7 +52,7 @@
                                 <div class="logo-area d-flex align-items-center">
                                     <div class="logo">
                                         <span href="index.html">
-                                            <img src="{{ asset('epora/assets/img/logo/logo.png') }}" alt="logo">
+                                            <img src="{{ asset('images/logo/logo-light.png') }}" alt="logo">
                                         </span>
                                     </div>
                                 </div>
@@ -343,7 +343,7 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="f-copyright__logo mb-30">
-                                    <a href="index.html"><img src="{{ asset('epora/assets/img/logo/Logo.png') }}"
+                                    <a href="index.html"><img src="{{ asset('images/logo/logo-light.png') }}"
                                             alt="logo"></a>
                                 </div>
                             </div>
